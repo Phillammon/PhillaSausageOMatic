@@ -43,7 +43,7 @@ int [string] parseSausageString(string pageText) {
 	int meatSoFar = values["currSausages"]*(values["currSausages"]+1)/2*111;
 	values["casingsCost"] = (values["currCasings"]+values["currSausages"]) * (values["currCasings"]+values["currSausages"]+1)/2*111 - meatSoFar;
 	values["meatToCasings"] = max(values["casingsCost"] - values["currMeat"], 0);
-	values["allCost"] = 30636 - meatSoFar;
+	values["allCost"] = max(30636 - meatSoFar, 0);
 	values["meatToAll"] = max(values["allCost"] - values["currMeat"], 0);
 	values["remainingSausages"] = 23 - values["currSausages"];
 	boolean flag = true;
