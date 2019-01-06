@@ -30,11 +30,11 @@ int [string] parseSausageString(string pageText) {
 	if (currMeat.find()) {
 		values["currMeat"] = to_int(currMeat.group(2));
 	}
-	matcher currCost = create_matcher("(of the )(\\d+)( required )" , pageText);
+	matcher currCost = create_matcher("(of the )([\\d\,]+)( required )" , pageText);
 	if (currCost.find()) {
 		values["nextCost"] = to_int(currCost.group(2));
 	}
-	matcher currCasings = create_matcher("(have )(\\d+)( magic)" , pageText);
+	matcher currCasings = create_matcher("(have )([\\d+\,]+)( magic)" , pageText);
 	if (currCasings.find()) {
 		values["currCasings"] = to_int(currCasings.group(2));
 	}

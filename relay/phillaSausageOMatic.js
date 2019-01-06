@@ -6,66 +6,23 @@ function processRelayReply(reply)
 	document.close();
 }
 
-function postFormRequest(page_url, parameters) {
-	var formData = new FormData();
-	
-	for (var key in parameters)
-	{
-		formData.append(key, parameters[key]);
-		console.log(key);
-		console.log(formData.get(key));
-	}
+function postFormRequests(requestList) {
+	var requestData = requestList.shift();
 	var request = new XMLHttpRequest();
-	request.onreadystatechange = function() { processRelayReply(request.responseText);} 
-	request.open("POST", page_url);
-	request.send(formData);
+	request.onreadystatechange = function(response) {if (request.readyState == 4) { if (request.status == 200) {if (requestList.length > 0) {postFormRequests(requestList);} else {processRelayReply(request.responseText);}}}} 
+	request.open("POST", requestData.url);
+	request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+	request.send(requestData.data);
 }
-
-function makePaste(amount, pwd) {
-		postFormRequest("craft.php", {
-			"action": "makepaste",
-			"pwd": pwd,
-			"qty": amount,
-			"whichitem": 25
-		});
-}
-
-function grindPaste(amount, pwd) {
-		postFormRequest("craft.php", {
-			"pwd": pwd,
-			"action": "makepaste",
-			"qty": amount,
-			"whichitem": 25
-		});
-}
-
-function makeSausage(amount, pwd) {
-	if (amount <= 1) {
-		postFormRequest("choice.php", {
-			"pwd": pwd,
-			"whichchoice": "1339",
-			"option": "2",
-		});
-	} 
-	else {
-		postFormRequest("choice.php", {
-			"pwd": pwd,
-			"whichchoice": "1339",
-			"option": "2",
-		});
-		makeSausage(amount-1, pwd);
-	}
-}
-
 
 function grindAndPump(meatPaste, sausage, pwd) {
-	if (meatPaste > 0 && sausage > 0) {
-		makePaste(meatPaste, pwd);
+	var requestList = [];
+	if (meatPaste > 0) {
+		requestList.push({"url": "craft.php", "data": "action=makepaste&whichitem=25&qty=" + meatPaste +"&pwd=" + pwd})
+		requestList.push({"url": "choice.php", "data": "whichchoice=1339&iid=25&option=1&qty=" + meatPaste +"&pwd=" + pwd})
 	}
-	else if (meatPaste > 0) {
-		makePaste(meatPaste, pwd);
+	for (i=0;i < sausage; i++) {
+		requestList.push({"url": "choice.php", "data": "whichchoice=1339&option=2&pwd=" + pwd})
 	}
-	else if (sausage > 0) {
-		makeSausage(sausage, pwd);
-	}
+	postFormRequests(requestList);
 }
