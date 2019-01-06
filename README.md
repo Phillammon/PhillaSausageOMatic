@@ -1,6 +1,7 @@
 # PhillaSausageOMatic
 A KramCo Sausage-O-Matic Relay Override for KoLMafia. Uses [Ezandora's Choice Override library](https://github.com/Ezandora/Choice-Override). Large chunks cribbed liberally from Ezan's various choice override scripts. Thank you so much for your guidance.
 
+![Screenshot](https://github.com/Phillammon/PhillaSausageOMatic/blob/master/kramco.png)
 
 Installation
 ------------
