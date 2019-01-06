@@ -6,7 +6,7 @@ Installation
 ------------
 Run
 <pre>
-svn checkout https://github.com/Phillammon/PhillaSausageOMatic/branches/Release/
+svn checkout https://github.com/Phillammon/PhillaSausageOMatic/branches/release/
 </pre>
 in the graphical CLI, and it should handle everything for you.
 
