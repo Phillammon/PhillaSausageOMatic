@@ -7,7 +7,7 @@ function processRelayReply(reply)
 }
 
 async function postFormRequests(requestList) {
-	await new Promise(resolve => setTimeout(resolve, 100)
+	await new Promise((resolve) => setTimeout(resolve, 100));
 	var requestData = requestList.shift();
 	var request = new XMLHttpRequest();
 	request.onreadystatechange = function(response) {if (request.readyState == 4) { if (request.status == 200) {if (requestList.length > 0) {postFormRequests(requestList);} else {processRelayReply(request.responseText);}}}} 

@@ -107,8 +107,11 @@ string [int] getSausageDisableStates(int [string] values) {
 	if (values["currMeat"] < values["nextCost"] || values["currCasings"] < 1) {
 		states[3] = "disabled";
 	}
-	if (values["currMeat"] < values["casingsCost"] || values["currCasings"] < values["remainingSausages"]) {
+	if (values["currMeat"] < values["casingsCost"] || values["currCasings"] < values["remainingSausages"] || values["remainingSausages"] == 0) {
 		states[4] = "disabled";
+	}
+	if (values["currMeat"] < values["nextCost"] || values["currCasings"] < 1) {
+		states[5] = "disabled";
 	}
 	if (my_meat() < values["meatPasteToNext"]*10 || values["currCasings"] < 1) {
 		states[6] = "disabled";
@@ -116,7 +119,7 @@ string [int] getSausageDisableStates(int [string] values) {
 	if (my_meat() < values["meatPasteToCasings"]*10) {
 		states[7] = "disabled";
 	}
-	if (my_meat() < values["meatPasteToAll"]*10 || values["currCasings"] < values["remainingSausages"]) {
+	if (my_meat() < values["meatPasteToAll"]*10 || values["currCasings"] < values["remainingSausages"] || values["remainingSausages"] == 0) {
 		states[8] = "disabled";
 	}
 	if (my_meat() < 30640) {
